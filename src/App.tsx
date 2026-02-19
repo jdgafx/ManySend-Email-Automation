@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from '@/context/AuthContext';
+import { ProtectedRoute } from '@/components/shared/ProtectedRoute';
 import { Layout } from '@/components/layout/Layout';
+import Login from '@/pages/Login';
 import Dashboard from '@/pages/Dashboard';
 import Campaigns from '@/pages/Campaigns';
 import CampaignDetail from '@/pages/CampaignDetail';
@@ -21,21 +24,26 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="campaigns" element={<Campaigns />} />
-            <Route path="campaigns/:id" element={<CampaignDetail />} />
-            <Route path="prospects" element={<Prospects />} />
-            <Route path="lists" element={<Lists />} />
-            <Route path="senders" element={<Senders />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="tags" element={<Tags />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="login" element={<Login />} />
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="campaigns" element={<Campaigns />} />
+                <Route path="campaigns/:id" element={<CampaignDetail />} />
+                <Route path="prospects" element={<Prospects />} />
+                <Route path="lists" element={<Lists />} />
+                <Route path="senders" element={<Senders />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="tags" element={<Tags />} />
+              </Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }

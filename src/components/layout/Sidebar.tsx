@@ -79,9 +79,18 @@ export function Sidebar() {
 
       <div className="border-t border-zinc-800 p-4">
         {!collapsed && (
-          <p className="text-xs text-zinc-500">
-            Powered by ManyReach API v2
-          </p>
+          <div className="space-y-1">
+            <p className="text-xs text-zinc-500">Powered by ManyReach API v2</p>
+            <p className="text-[10px] leading-snug text-zinc-600">
+              Created by Christopher Gentile
+              <br />
+              CGDarkstardev1 · New Dawn AI
+              <br />
+              for PrimeMarketingExperts.com
+              <br />
+              Family of Companies
+            </p>
+          </div>
         )}
       </div>
     </aside>
