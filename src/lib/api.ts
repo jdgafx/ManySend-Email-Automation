@@ -15,7 +15,9 @@ import type {
   CreateSenderInput,
   CreateListInput,
   CreateTagInput,
+  ProspectImport,
 } from '@/types';
+import type { MappedProspect } from '@/lib/spreadsheet';
 
 const API_BASE = '/api';
 
@@ -148,6 +150,26 @@ export const api = {
       }),
     delete: (id: number) =>
       request<void>(`/prospects/${id}`, { method: 'DELETE' }),
+    bulkCreate: (
+      prospects: MappedProspect[],
+      params: {
+        listId: number;
+        campaignId?: number;
+        addOnlyIfNew?: boolean;
+        notInOtherCampaign?: boolean;
+      }
+    ) => {
+      const qsParams: Record<string, string | number | undefined> = {
+        listId: params.listId,
+        campaignId: params.campaignId,
+        addOnlyIfNew: params.addOnlyIfNew !== undefined ? String(params.addOnlyIfNew) : undefined,
+        notInOtherCampaign: params.notInOtherCampaign !== undefined ? String(params.notInOtherCampaign) : undefined,
+      };
+      return request<ProspectImport>(`/prospects/bulk${qs(qsParams)}`, {
+        method: 'POST',
+        body: JSON.stringify({ prospects }),
+      });
+    },
   },
 
   // Lists

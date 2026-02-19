@@ -200,3 +200,12 @@ export interface CreateTagInput {
   title: string;
   description?: string;
 }
+
+export interface ProspectImport {
+  totalProcessed: number;
+  prospectsInserted: number;
+  prospectsUpdated: number;
+  duplicatesInBatch: number;
+  subscriptionsAdded: number;
+  campaignAdded: number;
+}

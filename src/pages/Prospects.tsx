@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Search, Plus, Users, Trash2, MoreHorizontal } from 'lucide-react';
+import { Search, Plus, Upload, Users, Trash2, MoreHorizontal } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { ProspectStatusBadge } from '@/components/shared/StatusBadge';
 import { LoadingState } from '@/components/shared/LoadingState';
 import { ErrorState } from '@/components/shared/ErrorState';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { SpreadsheetImport } from '@/components/shared/SpreadsheetImport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -35,6 +36,7 @@ export default function Prospects() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [createOpen, setCreateOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [page, setPage] = useState(1);
 
   const prospects = useProspects({ page: String(page), pageSize: '50', search: search || undefined });
@@ -63,9 +65,14 @@ export default function Prospects() {
         title="Prospects"
         description={`${prospects.data?.totalRecords || 0} prospects total`}
         actions={
-          <Button onClick={() => setCreateOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" /> Add Prospect
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="mr-2 h-4 w-4" /> Import Spreadsheet
+            </Button>
+            <Button onClick={() => setCreateOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> Add Prospect
+            </Button>
+          </div>
         }
       />
 
@@ -150,6 +157,8 @@ export default function Prospects() {
           <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>Next</Button>
         </div>
       )}
+
+      <SpreadsheetImport open={importOpen} onClose={() => setImportOpen(false)} />
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
         <DialogContent className="max-w-lg">

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import type { CreateCampaignInput, CreateProspectInput, CreateListInput, CreateTagInput, CreateSenderInput, CreateFollowupInput } from '@/types';
+import type { MappedProspect } from '@/lib/spreadsheet';
 
 export function useCampaigns(params?: Record<string, string | number | undefined>) {
   return useQuery({
@@ -152,6 +153,32 @@ export function useDeleteProspect() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => api.prospects.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['prospects'] }),
+  });
+}
+
+export function useBulkImportProspects() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      prospects,
+      listId,
+      campaignId,
+      addOnlyIfNew,
+      notInOtherCampaign,
+    }: {
+      prospects: MappedProspect[];
+      listId: number;
+      campaignId?: number;
+      addOnlyIfNew?: boolean;
+      notInOtherCampaign?: boolean;
+    }) =>
+      api.prospects.bulkCreate(prospects, {
+        listId,
+        campaignId,
+        addOnlyIfNew,
+        notInOtherCampaign,
+      }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['prospects'] }),
   });
 }
