@@ -14,7 +14,9 @@ const handler: Handler = async (event) => {
     return { statusCode: 500, headers, body: JSON.stringify({ message: 'API key not configured' }) };
   }
 
-  const manysendPath = event.path.replace(/^\/.netlify\/functions\/api/, '');
+  const manysendPath = event.path
+    .replace(/^\/.netlify\/functions\/api/, '')
+    .replace(/^\/api/, '');
   const queryString = event.rawQuery ? `?${event.rawQuery}` : '';
   const url = `${MANYSEND_BASE}${manysendPath}${queryString}`;
 
