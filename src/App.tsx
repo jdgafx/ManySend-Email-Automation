@@ -9,6 +9,7 @@ import Campaigns from '@/pages/Campaigns';
 import CampaignDetail from '@/pages/CampaignDetail';
 import Prospects from '@/pages/Prospects';
 import Lists from '@/pages/Lists';
+import ListDetail from '@/pages/ListDetail';
 import Senders from '@/pages/Senders';
 import Messages from '@/pages/Messages';
 import Tags from '@/pages/Tags';
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path="campaigns/:id" element={<CampaignDetail />} />
                 <Route path="prospects" element={<Prospects />} />
                 <Route path="lists" element={<Lists />} />
+                <Route path="lists/:id" element={<ListDetail />} />
                 <Route path="senders" element={<Senders />} />
                 <Route path="messages" element={<Messages />} />
                 <Route path="tags" element={<Tags />} />

@@ -198,11 +198,27 @@ export function useCreateList() {
   });
 }
 
+export function useList(id: number) {
+  return useQuery({
+    queryKey: ['lists', id],
+    queryFn: () => api.lists.get(id),
+    enabled: id > 0,
+  });
+}
+
 export function useDeleteList() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => api.lists.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['lists'] }),
+  });
+}
+
+export function useListProspects(listId: number, params?: Record<string, string | number | undefined>) {
+  return useQuery({
+    queryKey: ['lists', listId, 'prospects', params],
+    queryFn: () => api.lists.prospects(listId, params),
+    enabled: listId > 0,
   });
 }
 

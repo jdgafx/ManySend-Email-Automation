@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Zap } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { loginWithPassword, loginWithOAuth } from '@/lib/auth';
+import { LogoFull } from '@/components/shared/Logo';
 import { cn } from '@/lib/utils';
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
       </div>
     );
   }
@@ -38,14 +38,9 @@ export default function Login() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4">
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex flex-col items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 shadow-lg shadow-blue-900/40">
-            <Zap className="h-6 w-6 text-white" />
-          </div>
-          <div className="text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-white">ManySend</h1>
-            <p className="mt-1 text-sm text-zinc-400">Sign in to your account</p>
-          </div>
+        <div className="mb-8">
+          <LogoFull variant="login" />
+          <p className="mt-4 text-center text-sm text-zinc-400">Sign in to manage your campaigns</p>
         </div>
 
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl">
@@ -60,7 +55,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition focus:border-primary focus:ring-1 focus:ring-primary/30"
                 required
               />
             </div>
@@ -75,7 +70,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition focus:border-primary focus:ring-1 focus:ring-primary/30"
                 required
               />
             </div>
@@ -90,8 +85,8 @@ export default function Login() {
               type="submit"
               disabled={submitting}
               className={cn(
-                'w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white transition',
-                'hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40',
+                'w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white transition',
+                'hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/40',
                 'disabled:cursor-not-allowed disabled:opacity-60'
               )}
             >

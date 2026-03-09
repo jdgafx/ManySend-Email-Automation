@@ -22,14 +22,16 @@ type Step = 0 | 1 | 2 | 3;
 interface Props {
   open: boolean;
   onClose: () => void;
+  preselectedListId?: number;
+  preselectedCampaignId?: number;
 }
 
-export function SpreadsheetImport({ open, onClose }: Props) {
+export function SpreadsheetImport({ open, onClose, preselectedListId, preselectedCampaignId }: Props) {
   const [step, setStep] = useState<Step>(0);
   const [parsed, setParsed] = useState<ParsedSpreadsheet | null>(null);
   const [mapping, setMapping] = useState<ColumnMapping>({});
-  const [listId, setListId] = useState<string>('');
-  const [campaignId, setCampaignId] = useState<string>('');
+  const [listId, setListId] = useState<string>(preselectedListId ? String(preselectedListId) : '');
+  const [campaignId, setCampaignId] = useState<string>(preselectedCampaignId ? String(preselectedCampaignId) : '');
   const [addOnlyIfNew, setAddOnlyIfNew] = useState(false);
   const [notInOtherCampaign, setNotInOtherCampaign] = useState(false);
   const [parseError, setParseError] = useState('');
@@ -46,8 +48,8 @@ export function SpreadsheetImport({ open, onClose }: Props) {
     setStep(0);
     setParsed(null);
     setMapping({});
-    setListId('');
-    setCampaignId('');
+    setListId(preselectedListId ? String(preselectedListId) : '');
+    setCampaignId(preselectedCampaignId ? String(preselectedCampaignId) : '');
     setAddOnlyIfNew(false);
     setNotInOtherCampaign(false);
     setParseError('');
@@ -229,9 +231,9 @@ function StepIndicator({ current }: { current: Step }) {
               className={cn(
                 'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                 i < current
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : i === current
-                  ? 'bg-blue-600 text-white ring-2 ring-blue-400/40'
+                  ? 'bg-primary text-white ring-2 ring-primary/40'
                   : 'bg-muted text-muted-foreground'
               )}
             >
@@ -278,8 +280,8 @@ function UploadStep({
         className={cn(
           'flex w-full cursor-pointer flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 transition-colors',
           dragging
-            ? 'border-blue-500 bg-blue-500/5'
-            : 'border-border hover:border-blue-400 hover:bg-muted/30'
+            ? 'border-primary bg-primary/5'
+            : 'border-border hover:border-primary/60 hover:bg-muted/30'
         )}
       >
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
@@ -432,7 +434,7 @@ function ConfigureStep({
   return (
     <div className="space-y-5">
       <div className="rounded-lg border bg-muted/30 px-4 py-3 text-sm">
-        <span className="font-semibold text-blue-500">{mappedEmailRows}</span> prospects will be imported
+        <span className="font-semibold text-primary">{mappedEmailRows}</span> prospects will be imported
         {skipped > 0 && (
           <span className="text-muted-foreground">, {skipped} rows skipped (no valid email)</span>
         )}
@@ -511,7 +513,7 @@ function Toggle({
       <div
         className={cn(
           'relative h-5 w-9 shrink-0 rounded-full transition-colors',
-          checked ? 'bg-blue-600' : 'bg-muted-foreground/30'
+          checked ? 'bg-primary' : 'bg-muted-foreground/30'
         )}
       >
         <span
@@ -558,7 +560,7 @@ function ResultsStep({
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-blue-600 transition-all duration-300"
+              className="h-full rounded-full bg-primary transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -579,7 +581,7 @@ function ResultsStep({
       <div className="grid w-full max-w-sm grid-cols-2 gap-3">
         <StatCard label="Processed" value={result.totalProcessed} />
         <StatCard label="Inserted" value={result.prospectsInserted} color="text-green-500" />
-        <StatCard label="Updated" value={result.prospectsUpdated} color="text-blue-500" />
+        <StatCard label="Updated" value={result.prospectsUpdated} color="text-primary" />
         <StatCard label="Duplicates" value={result.duplicatesInBatch} color="text-amber-500" />
       </div>
     </div>

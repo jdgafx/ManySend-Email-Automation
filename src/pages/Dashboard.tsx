@@ -41,7 +41,7 @@ export default function Dashboard() {
     <div className="space-y-8">
       <PageHeader
         title="Dashboard"
-        description="Overview of your cold email outreach"
+        description="Your email campaign command center"
         actions={
           <Link to="/campaigns">
             <Button>
@@ -57,25 +57,25 @@ export default function Dashboard() {
           label="Total Campaigns"
           value={formatNumber(campaigns.data?.totalRecords || 0)}
           icon={Mail}
-          iconColor="text-blue-600"
+          iconColor="text-indigo-400"
         />
         <StatsCard
           label="Active Campaigns"
           value={activeCampaigns}
           icon={Activity}
-          iconColor="text-emerald-600"
+          iconColor="text-emerald-400"
         />
         <StatsCard
           label="Total Prospects"
           value={formatNumber(totalProspects)}
           icon={Users}
-          iconColor="text-amber-600"
+          iconColor="text-amber-400"
         />
         <StatsCard
           label="Sender Accounts"
           value={senderList.length}
           icon={Send}
-          iconColor="text-blue-600"
+          iconColor="text-indigo-400"
         />
       </div>
 
@@ -101,8 +101,8 @@ export default function Dashboard() {
                     className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                        <Mail className="h-4 w-4 text-blue-600" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10">
+                        <Mail className="h-4 w-4 text-indigo-400" />
                       </div>
                       <div>
                         <p className="text-sm font-medium">{campaign.name}</p>
@@ -126,7 +126,7 @@ export default function Dashboard() {
             <div className="w-full space-y-2 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Warmup Active</span>
-                <span className={warmupActive ? 'text-emerald-600' : 'text-red-500'}>
+                <span className={warmupActive ? 'text-emerald-400' : 'text-red-500'}>
                   {warmupActive ? 'Yes' : 'No'}
                 </span>
               </div>
@@ -140,7 +140,7 @@ export default function Dashboard() {
               </div>
             </div>
             {!warmupActive && senderList.length > 0 && (
-              <div className="w-full rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              <div className="w-full rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-400">
                 Enable warmup on your senders to protect reputation
               </div>
             )}

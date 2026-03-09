@@ -1,5 +1,5 @@
 const GOTRUE = '/.netlify/identity';
-const USER_KEY = 'manysend.user';
+const USER_KEY = 'pme.user';
 
 export interface User {
   id: string;
@@ -145,12 +145,14 @@ export function displayName(user: User): string {
   return (
     user.user_metadata?.full_name ??
     user.user_metadata?.name ??
-    user.email.split('@')[0]
+    user.email?.split('@')[0] ??
+    'User'
   );
 }
 
 export function initials(user: User): string {
   const name = displayName(user);
+  if (!name) return 'U';
   const parts = name.trim().split(/\s+/);
   if (parts.length >= 2) {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();

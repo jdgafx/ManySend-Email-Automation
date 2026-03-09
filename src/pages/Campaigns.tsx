@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Search, Play, Pause, Copy, Trash2, MoreHorizontal, Mail } from 'lucide-react';
+import { Plus, Search, Play, Pause, Copy, Trash2, MoreHorizontal, Mail, Upload } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CampaignStatusBadge } from '@/components/shared/StatusBadge';
 import { LoadingState } from '@/components/shared/LoadingState';
 import { ErrorState } from '@/components/shared/ErrorState';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { SpreadsheetImport } from '@/components/shared/SpreadsheetImport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -31,6 +32,7 @@ export default function Campaigns() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [createOpen, setCreateOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const navigate = useNavigate();
 
   const campaigns = useCampaigns({ pageSize: '100' });
@@ -64,9 +66,14 @@ export default function Campaigns() {
         title="Campaigns"
         description={`${campaigns.data?.totalRecords || 0} campaigns total`}
         actions={
-          <Button onClick={() => setCreateOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" /> New Campaign
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="mr-2 h-4 w-4" /> Import Spreadsheet
+            </Button>
+            <Button onClick={() => setCreateOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> New Campaign
+            </Button>
+          </div>
         }
       />
 
@@ -165,6 +172,8 @@ export default function Campaigns() {
           </CardContent>
         </Card>
       )}
+
+      <SpreadsheetImport open={importOpen} onClose={() => setImportOpen(false)} />
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
         <DialogContent>

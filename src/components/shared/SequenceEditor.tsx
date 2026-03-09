@@ -100,7 +100,7 @@ export function SequenceEditor({ sequence }: SequenceEditorProps) {
           )}
           {followupList.map((f, idx) => (
             <div key={f.id} className="flex items-start gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/30">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-bold text-primary">
                 {idx + 1}
               </div>
               <div className="flex-1 min-w-0">
@@ -154,7 +154,7 @@ export function SequenceEditor({ sequence }: SequenceEditorProps) {
                     key={t.token}
                     type="button"
                     onClick={() => insertToken(t.token)}
-                    className="rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 transition-colors hover:bg-blue-100"
+                    className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
                   >
                     {t.token}
                   </button>
@@ -167,7 +167,7 @@ export function SequenceEditor({ sequence }: SequenceEditorProps) {
                 className="min-h-[200px] font-mono text-sm"
               />
               {body && !hasPersonalization(body) && (
-                <div className="flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                <div className="flex items-center gap-2 rounded-md bg-amber-500/10 px-3 py-2 text-xs text-amber-400">
                   <Sparkles className="h-3 w-3" />
                   Adding personalization tokens reduces spam score and improves reply rates.
                 </div>

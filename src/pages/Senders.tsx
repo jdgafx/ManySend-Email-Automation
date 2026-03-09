@@ -74,11 +74,11 @@ export default function Senders() {
       />
 
       {noWarmupCount > 0 && (
-        <div className="flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="flex items-center gap-3 rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-400">
           <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />
           <div>
             <p className="font-medium">{noWarmupCount} sender{noWarmupCount > 1 ? 's' : ''} ha{noWarmupCount > 1 ? 've' : 's'} warmup disabled</p>
-            <p className="text-amber-700">Enable warmup to protect your sender reputation and improve deliverability.</p>
+            <p className="text-amber-300">Enable warmup to protect your sender reputation and improve deliverability.</p>
           </div>
         </div>
       )}

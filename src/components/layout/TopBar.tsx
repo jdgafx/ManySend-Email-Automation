@@ -47,7 +47,7 @@ export function TopBar() {
               className="h-7 w-7 rounded-full object-cover ring-1 ring-border"
             />
           ) : (
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
               {abbrev}
             </span>
           )}

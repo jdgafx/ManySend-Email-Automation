@@ -75,7 +75,7 @@ export default function Tags() {
                   <tr key={tag.id} className="transition-colors hover:bg-muted/50">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <Tag className="h-4 w-4 text-blue-500" />
+                        <Tag className="h-4 w-4 text-indigo-400" />
                         <span className="font-medium">{tag.title}</span>
                       </div>
                     </td>

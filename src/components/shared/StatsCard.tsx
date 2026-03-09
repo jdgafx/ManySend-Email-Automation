@@ -11,7 +11,7 @@ interface StatsCardProps {
   iconColor?: string;
 }
 
-export function StatsCard({ label, value, icon: Icon, trend, className, iconColor = 'text-blue-600' }: StatsCardProps) {
+export function StatsCard({ label, value, icon: Icon, trend, className, iconColor = 'text-indigo-400' }: StatsCardProps) {
   return (
     <Card className={cn('overflow-hidden', className)}>
       <CardContent className="p-6">
@@ -20,12 +20,12 @@ export function StatsCard({ label, value, icon: Icon, trend, className, iconColo
             <p className="text-sm font-medium text-muted-foreground">{label}</p>
             <p className="font-display text-3xl font-bold tracking-tight">{value}</p>
             {trend && (
-              <p className={cn('text-xs font-medium', trend.positive ? 'text-emerald-600' : 'text-red-500')}>
+              <p className={cn('text-xs font-medium', trend.positive ? 'text-emerald-400' : 'text-red-500')}>
                 {trend.positive ? '+' : ''}{trend.value}% from last period
               </p>
             )}
           </div>
-          <div className={cn('rounded-xl bg-blue-50 p-3', iconColor === 'text-emerald-600' && 'bg-emerald-50', iconColor === 'text-amber-600' && 'bg-amber-50', iconColor === 'text-red-500' && 'bg-red-50')}>
+          <div className={cn('rounded-xl bg-indigo-500/10 p-3', iconColor === 'text-emerald-400' && 'bg-emerald-500/10', iconColor === 'text-amber-400' && 'bg-amber-500/10', iconColor === 'text-red-500' && 'bg-red-500/10')}>
             <Icon className={cn('h-5 w-5', iconColor)} />
           </div>
         </div>

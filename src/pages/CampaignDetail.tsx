@@ -72,11 +72,11 @@ export default function CampaignDetail() {
       />
 
       {highBounce && (
-        <div className="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+        <div className="flex items-center gap-3 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           <AlertTriangle className="h-5 w-5 shrink-0 text-red-500" />
           <div>
             <p className="font-medium">High bounce rate detected ({formatPercent(bounceRate)})</p>
-            <p className="text-red-600">Pause this campaign and clean your prospect list to protect sender reputation.</p>
+            <p className="text-red-300">Pause this campaign and clean your prospect list to protect sender reputation.</p>
           </div>
         </div>
       )}
@@ -90,10 +90,10 @@ export default function CampaignDetail() {
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <StatsCard label="Sent" value={s?.sent || 0} icon={Mail} iconColor="text-blue-600" />
-            <StatsCard label="Opens" value={s ? `${s.opened} (${formatPercent(s.openRate)})` : '—'} icon={Eye} iconColor="text-emerald-600" />
+            <StatsCard label="Sent" value={s?.sent || 0} icon={Mail} iconColor="text-indigo-400" />
+            <StatsCard label="Opens" value={s ? `${s.opened} (${formatPercent(s.openRate)})` : '—'} icon={Eye} iconColor="text-emerald-400" />
             <StatsCard label="Clicks" value={s ? `${s.clicked} (${formatPercent(s.clickRate)})` : '—'} icon={MousePointer} iconColor="text-amber-600" />
-            <StatsCard label="Replies" value={s ? `${s.replied} (${formatPercent(s.replyRate)})` : '—'} icon={MessageSquare} iconColor="text-blue-600" />
+            <StatsCard label="Replies" value={s ? `${s.replied} (${formatPercent(s.replyRate)})` : '—'} icon={MessageSquare} iconColor="text-indigo-400" />
             <StatsCard label="Bounces" value={s ? `${s.bounced} (${formatPercent(s.bounceRate)})` : '—'} icon={XCircle} iconColor="text-red-500" />
             <StatsCard label="Unsubscribed" value={s?.unsubscribed || 0} icon={AlertTriangle} iconColor="text-amber-600" />
           </div>

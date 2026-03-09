@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Plus, ListChecks, Trash2, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, ListChecks, Trash2, Users, Upload } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { LoadingState } from '@/components/shared/LoadingState';
 import { ErrorState } from '@/components/shared/ErrorState';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { SpreadsheetImport } from '@/components/shared/SpreadsheetImport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -25,6 +27,7 @@ type ListForm = z.infer<typeof listSchema>;
 
 export default function Lists() {
   const [createOpen, setCreateOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const lists = useLists({ pageSize: '100' });
   const createList = useCreateList();
   const deleteList = useDeleteList();
@@ -50,9 +53,14 @@ export default function Lists() {
         title="Mailing Lists"
         description="Organize your prospects into targeted lists"
         actions={
-          <Button onClick={() => setCreateOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" /> New List
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="mr-2 h-4 w-4" /> Import Spreadsheet
+            </Button>
+            <Button onClick={() => setCreateOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> New List
+            </Button>
+          </div>
         }
       />
 
@@ -61,43 +69,47 @@ export default function Lists() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((list) => (
-            <Card key={list.id} className="group relative overflow-hidden transition-shadow hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                      <ListChecks className="h-5 w-5 text-blue-600" />
+            <Link key={list.id} to={`/lists/${list.id}`} className="block">
+              <Card className="group relative overflow-hidden transition-shadow hover:shadow-md hover:ring-1 hover:ring-indigo-500/30 cursor-pointer">
+                <CardHeader className="pb-2">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10">
+                        <ListChecks className="h-5 w-5 text-indigo-400" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-base">{list.title}</CardTitle>
+                        {list.description && (
+                          <p className="mt-0.5 text-xs text-muted-foreground">{list.description}</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <CardTitle className="text-base">{list.title}</CardTitle>
-                      {list.description && (
-                        <p className="mt-0.5 text-xs text-muted-foreground">{list.description}</p>
-                      )}
-                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="opacity-0 group-hover:opacity-100"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteList.mutate(list.id); }}
+                    >
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="opacity-0 group-hover:opacity-100"
-                    onClick={() => deleteList.mutate(list.id)}
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-1 text-muted-foreground">
-                    <Users className="h-3 w-3" />
-                    {list.prospectsCount} prospects
-                  </span>
-                  <span className="text-xs text-muted-foreground">{formatDate(list.createdAt)}</span>
-                </div>
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                      <Users className="h-3 w-3" />
+                      {list.prospectsCount} prospects
+                    </span>
+                    <span className="text-xs text-muted-foreground">{formatDate(list.createdAt)}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       )}
+
+      <SpreadsheetImport open={importOpen} onClose={() => setImportOpen(false)} />
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
         <DialogContent>
